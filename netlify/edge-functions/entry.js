@@ -6688,12 +6688,15 @@ function createExports(manifest) {
   const app = new App(manifest);
   const handler = async (request) => {
     const url = new URL(request.url);
+    console.log(1, url)
     if (manifest.assets.has(url.pathname)) {
+      console.log(2, 'manifest has: ', url.pathname)
       return;
     }
     if (app.match(request)) {
       return app.render(request);
     }
+    console.log(3, 'no match for: ', url.pathname);
     return new Response(null, {
       status: 404,
       statusText: "Not found"
