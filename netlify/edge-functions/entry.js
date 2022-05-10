@@ -6688,15 +6688,16 @@ function createExports(manifest) {
   const app = new App(manifest);
   const handler = async (request) => {
     const url = new URL(request.url);
-    console.log(1, url)
+    console.log(1, {assets: manifest.assets, url: url.pathname})
     if (manifest.assets.has(url.pathname)) {
-      console.log(2, 'manifest has: ', url.pathname)
+      console.log(2, {has: manifest.assets.has(url.pathname)})
       return;
     }
     if (app.match(request)) {
+      console.log(3, 'astro rendering response')
       return app.render(request);
     }
-    console.log(3, 'no match for: ', url.pathname);
+    console.log(4, 'returning 404')
     return new Response(null, {
       status: 404,
       statusText: "Not found"
@@ -6728,7 +6729,8 @@ const $$Index = createComponent(async ($$result, $$props, $$slots) => {
 		
 	<!--astro:head--></head>
 	<body>
-		<h1>Astro</h1>
+    <h1>Astro</h1>
+    <img src="/puppy.png"/>
 	</body></html>`;
 });
 
